@@ -7,5 +7,6 @@
 #include "interfaces/msg/detail/iss__struct.hpp"
 #include "interfaces/msg/detail/iss__builder.hpp"
 #include "interfaces/msg/detail/iss__traits.hpp"
+#include "interfaces/msg/detail/iss__type_support.hpp"
 
 #endif  // INTERFACES__MSG__ISS_HPP_

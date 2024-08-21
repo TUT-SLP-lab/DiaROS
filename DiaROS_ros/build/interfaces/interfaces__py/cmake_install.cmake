@@ -1,8 +1,8 @@
-# Install script for directory: /home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/interfaces__py
+# Install script for directory: /home/diasys/DiaROS/DiaROS_ros/build/interfaces/interfaces__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/nishimura/program/moriSDS/DiaROS_ros/install/interfaces")
+  set(CMAKE_INSTALL_PREFIX "/home/diasys/DiaROS/DiaROS_ros/install/interfaces")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

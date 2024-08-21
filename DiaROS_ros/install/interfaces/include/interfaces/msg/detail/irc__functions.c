@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "rcutils/allocator.h"
+
 
 // Include directives for member types
 // Member `word`
@@ -37,17 +39,50 @@ interfaces__msg__Irc__fini(interfaces__msg__Irc * msg)
   rosidl_runtime_c__String__fini(&msg->word);
 }
 
+bool
+interfaces__msg__Irc__are_equal(const interfaces__msg__Irc * lhs, const interfaces__msg__Irc * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  // word
+  if (!rosidl_runtime_c__String__are_equal(
+      &(lhs->word), &(rhs->word)))
+  {
+    return false;
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Irc__copy(
+  const interfaces__msg__Irc * input,
+  interfaces__msg__Irc * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  // word
+  if (!rosidl_runtime_c__String__copy(
+      &(input->word), &(output->word)))
+  {
+    return false;
+  }
+  return true;
+}
+
 interfaces__msg__Irc *
 interfaces__msg__Irc__create()
 {
-  interfaces__msg__Irc * msg = (interfaces__msg__Irc *)malloc(sizeof(interfaces__msg__Irc));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Irc * msg = (interfaces__msg__Irc *)allocator.allocate(sizeof(interfaces__msg__Irc), allocator.state);
   if (!msg) {
     return NULL;
   }
   memset(msg, 0, sizeof(interfaces__msg__Irc));
   bool success = interfaces__msg__Irc__init(msg);
   if (!success) {
-    free(msg);
+    allocator.deallocate(msg, allocator.state);
     return NULL;
   }
   return msg;
@@ -56,10 +91,11 @@ interfaces__msg__Irc__create()
 void
 interfaces__msg__Irc__destroy(interfaces__msg__Irc * msg)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (msg) {
     interfaces__msg__Irc__fini(msg);
   }
-  free(msg);
+  allocator.deallocate(msg, allocator.state);
 }
 
 
@@ -69,9 +105,11 @@ interfaces__msg__Irc__Sequence__init(interfaces__msg__Irc__Sequence * array, siz
   if (!array) {
     return false;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   interfaces__msg__Irc * data = NULL;
+
   if (size) {
-    data = (interfaces__msg__Irc *)calloc(size, sizeof(interfaces__msg__Irc));
+    data = (interfaces__msg__Irc *)allocator.zero_allocate(size, sizeof(interfaces__msg__Irc), allocator.state);
     if (!data) {
       return false;
     }
@@ -88,7 +126,7 @@ interfaces__msg__Irc__Sequence__init(interfaces__msg__Irc__Sequence * array, siz
       for (; i > 0; --i) {
         interfaces__msg__Irc__fini(&data[i - 1]);
       }
-      free(data);
+      allocator.deallocate(data, allocator.state);
       return false;
     }
   }
@@ -104,6 +142,8 @@ interfaces__msg__Irc__Sequence__fini(interfaces__msg__Irc__Sequence * array)
   if (!array) {
     return;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+
   if (array->data) {
     // ensure that data and capacity values are consistent
     assert(array->capacity > 0);
@@ -111,7 +151,7 @@ interfaces__msg__Irc__Sequence__fini(interfaces__msg__Irc__Sequence * array)
     for (size_t i = 0; i < array->capacity; ++i) {
       interfaces__msg__Irc__fini(&array->data[i]);
     }
-    free(array->data);
+    allocator.deallocate(array->data, allocator.state);
     array->data = NULL;
     array->size = 0;
     array->capacity = 0;
@@ -125,13 +165,14 @@ interfaces__msg__Irc__Sequence__fini(interfaces__msg__Irc__Sequence * array)
 interfaces__msg__Irc__Sequence *
 interfaces__msg__Irc__Sequence__create(size_t size)
 {
-  interfaces__msg__Irc__Sequence * array = (interfaces__msg__Irc__Sequence *)malloc(sizeof(interfaces__msg__Irc__Sequence));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Irc__Sequence * array = (interfaces__msg__Irc__Sequence *)allocator.allocate(sizeof(interfaces__msg__Irc__Sequence), allocator.state);
   if (!array) {
     return NULL;
   }
   bool success = interfaces__msg__Irc__Sequence__init(array, size);
   if (!success) {
-    free(array);
+    allocator.deallocate(array, allocator.state);
     return NULL;
   }
   return array;
@@ -140,8 +181,66 @@ interfaces__msg__Irc__Sequence__create(size_t size)
 void
 interfaces__msg__Irc__Sequence__destroy(interfaces__msg__Irc__Sequence * array)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (array) {
     interfaces__msg__Irc__Sequence__fini(array);
   }
-  free(array);
+  allocator.deallocate(array, allocator.state);
+}
+
+bool
+interfaces__msg__Irc__Sequence__are_equal(const interfaces__msg__Irc__Sequence * lhs, const interfaces__msg__Irc__Sequence * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  if (lhs->size != rhs->size) {
+    return false;
+  }
+  for (size_t i = 0; i < lhs->size; ++i) {
+    if (!interfaces__msg__Irc__are_equal(&(lhs->data[i]), &(rhs->data[i]))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Irc__Sequence__copy(
+  const interfaces__msg__Irc__Sequence * input,
+  interfaces__msg__Irc__Sequence * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  if (output->capacity < input->size) {
+    const size_t allocation_size =
+      input->size * sizeof(interfaces__msg__Irc);
+    interfaces__msg__Irc * data =
+      (interfaces__msg__Irc *)realloc(output->data, allocation_size);
+    if (!data) {
+      return false;
+    }
+    for (size_t i = output->capacity; i < input->size; ++i) {
+      if (!interfaces__msg__Irc__init(&data[i])) {
+        /* free currently allocated and return false */
+        for (; i-- > output->capacity; ) {
+          interfaces__msg__Irc__fini(&data[i]);
+        }
+        free(data);
+        return false;
+      }
+    }
+    output->data = data;
+    output->capacity = input->size;
+  }
+  output->size = input->size;
+  for (size_t i = 0; i < input->size; ++i) {
+    if (!interfaces__msg__Irc__copy(
+        &(input->data[i]), &(output->data[i])))
+    {
+      return false;
+    }
+  }
+  return true;
 }

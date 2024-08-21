@@ -23,12 +23,11 @@ namespace rosidl_typesupport_cpp
 
 typedef struct _Iss_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _Iss_type_support_ids_t;
 
 static const _Iss_type_support_ids_t _Iss_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_cpp",  // ::rosidl_typesupport_connext_cpp::typesupport_identifier,
     "rosidl_typesupport_fastrtps_cpp",  // ::rosidl_typesupport_fastrtps_cpp::typesupport_identifier,
     "rosidl_typesupport_introspection_cpp",  // ::rosidl_typesupport_introspection_cpp::typesupport_identifier,
   }
@@ -36,7 +35,7 @@ static const _Iss_type_support_ids_t _Iss_message_typesupport_ids = {
 
 typedef struct _Iss_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _Iss_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -44,7 +43,6 @@ typedef struct _Iss_type_support_symbol_names_t
 
 static const _Iss_type_support_symbol_names_t _Iss_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_cpp, interfaces, msg, Iss)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, interfaces, msg, Iss)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_cpp, interfaces, msg, Iss)),
   }
@@ -52,19 +50,18 @@ static const _Iss_type_support_symbol_names_t _Iss_message_typesupport_symbol_na
 
 typedef struct _Iss_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _Iss_type_support_data_t;
 
 static _Iss_type_support_data_t _Iss_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _Iss_message_typesupport_map = {
-  3,
+  2,
   "interfaces",
   &_Iss_message_typesupport_ids.typesupport_identifier[0],
   &_Iss_message_typesupport_symbol_names.symbol_name[0],

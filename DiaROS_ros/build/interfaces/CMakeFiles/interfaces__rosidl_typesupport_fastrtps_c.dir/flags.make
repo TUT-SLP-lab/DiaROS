@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS = -fPIC   -Wall -Wextra -Wpedantic -Wall -Wextra -Wpedantic -fPIC -std=gnu++14
 
-CXX_DEFINES = -DFOONATHAN_MEMORY=1 -DFOONATHAN_MEMORY_VERSION_MAJOR=0 -DFOONATHAN_MEMORY_VERSION_MINOR=6 -DFOONATHAN_MEMORY_VERSION_PATCH=2 -DROS_PACKAGE_NAME=\"interfaces\" -Dinterfaces__rosidl_typesupport_fastrtps_c_EXPORTS
+CXX_DEFINES = -DFOONATHAN_MEMORY=1 -DFOONATHAN_MEMORY_VERSION_MAJOR=0 -DFOONATHAN_MEMORY_VERSION_MINOR=7 -DFOONATHAN_MEMORY_VERSION_PATCH=1 -DRCUTILS_ENABLE_FAULT_INJECTION -DROS_PACKAGE_NAME=\"interfaces\" -Dinterfaces__rosidl_typesupport_fastrtps_c_EXPORTS
 
-CXX_INCLUDES = -I/home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/rosidl_generator_c -I/home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/rosidl_generator_cpp -I/home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/rosidl_typesupport_fastrtps_c -I/home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/rosidl_typesupport_fastrtps_cpp -isystem /home/nishimura/ros2_foxy/ros2-linux/include -isystem /home/nishimura/ros2_foxy/ros2-linux/include/foonathan_memory/comp -isystem /home/nishimura/ros2_foxy/ros2-linux/include/foonathan_memory 
+CXX_INCLUDES = -I/home/diasys/DiaROS/DiaROS_ros/build/interfaces/rosidl_generator_c -I/home/diasys/DiaROS/DiaROS_ros/build/interfaces/rosidl_generator_cpp -I/home/diasys/DiaROS/DiaROS_ros/build/interfaces/rosidl_typesupport_fastrtps_c -I/home/diasys/DiaROS/DiaROS_ros/build/interfaces/rosidl_typesupport_fastrtps_cpp -isystem /opt/ros/foxy/include -isystem /opt/ros/foxy/include/foonathan_memory 
 

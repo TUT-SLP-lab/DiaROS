@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS = -fPIC   -Wall -std=gnu++14
 
-CXX_DEFINES = -DROS_PACKAGE_NAME=\"interfaces\" -Dinterfaces__rosidl_typesupport_introspection_cpp_EXPORTS
+CXX_DEFINES = -DRCUTILS_ENABLE_FAULT_INJECTION -DROS_PACKAGE_NAME=\"interfaces\" -Dinterfaces__rosidl_typesupport_introspection_cpp_EXPORTS
 
-CXX_INCLUDES = -I/home/nishimura/program/moriSDS/DiaROS_ros/build/interfaces/rosidl_generator_cpp -isystem /home/nishimura/ros2_foxy/ros2-linux/include 
+CXX_INCLUDES = -I/home/diasys/DiaROS/DiaROS_ros/build/interfaces/rosidl_generator_cpp -isystem /opt/ros/foxy/include 
 

@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "rcutils/allocator.h"
+
 
 bool
 interfaces__msg__Isa__init(interfaces__msg__Isa * msg)
@@ -36,17 +38,68 @@ interfaces__msg__Isa__fini(interfaces__msg__Isa * msg)
   // zerocross
 }
 
+bool
+interfaces__msg__Isa__are_equal(const interfaces__msg__Isa * lhs, const interfaces__msg__Isa * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  // prevgrad
+  if (lhs->prevgrad != rhs->prevgrad) {
+    return false;
+  }
+  // frequency
+  if (lhs->frequency != rhs->frequency) {
+    return false;
+  }
+  // grad
+  if (lhs->grad != rhs->grad) {
+    return false;
+  }
+  // power
+  if (lhs->power != rhs->power) {
+    return false;
+  }
+  // zerocross
+  if (lhs->zerocross != rhs->zerocross) {
+    return false;
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Isa__copy(
+  const interfaces__msg__Isa * input,
+  interfaces__msg__Isa * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  // prevgrad
+  output->prevgrad = input->prevgrad;
+  // frequency
+  output->frequency = input->frequency;
+  // grad
+  output->grad = input->grad;
+  // power
+  output->power = input->power;
+  // zerocross
+  output->zerocross = input->zerocross;
+  return true;
+}
+
 interfaces__msg__Isa *
 interfaces__msg__Isa__create()
 {
-  interfaces__msg__Isa * msg = (interfaces__msg__Isa *)malloc(sizeof(interfaces__msg__Isa));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Isa * msg = (interfaces__msg__Isa *)allocator.allocate(sizeof(interfaces__msg__Isa), allocator.state);
   if (!msg) {
     return NULL;
   }
   memset(msg, 0, sizeof(interfaces__msg__Isa));
   bool success = interfaces__msg__Isa__init(msg);
   if (!success) {
-    free(msg);
+    allocator.deallocate(msg, allocator.state);
     return NULL;
   }
   return msg;
@@ -55,10 +108,11 @@ interfaces__msg__Isa__create()
 void
 interfaces__msg__Isa__destroy(interfaces__msg__Isa * msg)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (msg) {
     interfaces__msg__Isa__fini(msg);
   }
-  free(msg);
+  allocator.deallocate(msg, allocator.state);
 }
 
 
@@ -68,9 +122,11 @@ interfaces__msg__Isa__Sequence__init(interfaces__msg__Isa__Sequence * array, siz
   if (!array) {
     return false;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   interfaces__msg__Isa * data = NULL;
+
   if (size) {
-    data = (interfaces__msg__Isa *)calloc(size, sizeof(interfaces__msg__Isa));
+    data = (interfaces__msg__Isa *)allocator.zero_allocate(size, sizeof(interfaces__msg__Isa), allocator.state);
     if (!data) {
       return false;
     }
@@ -87,7 +143,7 @@ interfaces__msg__Isa__Sequence__init(interfaces__msg__Isa__Sequence * array, siz
       for (; i > 0; --i) {
         interfaces__msg__Isa__fini(&data[i - 1]);
       }
-      free(data);
+      allocator.deallocate(data, allocator.state);
       return false;
     }
   }
@@ -103,6 +159,8 @@ interfaces__msg__Isa__Sequence__fini(interfaces__msg__Isa__Sequence * array)
   if (!array) {
     return;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+
   if (array->data) {
     // ensure that data and capacity values are consistent
     assert(array->capacity > 0);
@@ -110,7 +168,7 @@ interfaces__msg__Isa__Sequence__fini(interfaces__msg__Isa__Sequence * array)
     for (size_t i = 0; i < array->capacity; ++i) {
       interfaces__msg__Isa__fini(&array->data[i]);
     }
-    free(array->data);
+    allocator.deallocate(array->data, allocator.state);
     array->data = NULL;
     array->size = 0;
     array->capacity = 0;
@@ -124,13 +182,14 @@ interfaces__msg__Isa__Sequence__fini(interfaces__msg__Isa__Sequence * array)
 interfaces__msg__Isa__Sequence *
 interfaces__msg__Isa__Sequence__create(size_t size)
 {
-  interfaces__msg__Isa__Sequence * array = (interfaces__msg__Isa__Sequence *)malloc(sizeof(interfaces__msg__Isa__Sequence));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Isa__Sequence * array = (interfaces__msg__Isa__Sequence *)allocator.allocate(sizeof(interfaces__msg__Isa__Sequence), allocator.state);
   if (!array) {
     return NULL;
   }
   bool success = interfaces__msg__Isa__Sequence__init(array, size);
   if (!success) {
-    free(array);
+    allocator.deallocate(array, allocator.state);
     return NULL;
   }
   return array;
@@ -139,8 +198,66 @@ interfaces__msg__Isa__Sequence__create(size_t size)
 void
 interfaces__msg__Isa__Sequence__destroy(interfaces__msg__Isa__Sequence * array)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (array) {
     interfaces__msg__Isa__Sequence__fini(array);
   }
-  free(array);
+  allocator.deallocate(array, allocator.state);
+}
+
+bool
+interfaces__msg__Isa__Sequence__are_equal(const interfaces__msg__Isa__Sequence * lhs, const interfaces__msg__Isa__Sequence * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  if (lhs->size != rhs->size) {
+    return false;
+  }
+  for (size_t i = 0; i < lhs->size; ++i) {
+    if (!interfaces__msg__Isa__are_equal(&(lhs->data[i]), &(rhs->data[i]))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Isa__Sequence__copy(
+  const interfaces__msg__Isa__Sequence * input,
+  interfaces__msg__Isa__Sequence * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  if (output->capacity < input->size) {
+    const size_t allocation_size =
+      input->size * sizeof(interfaces__msg__Isa);
+    interfaces__msg__Isa * data =
+      (interfaces__msg__Isa *)realloc(output->data, allocation_size);
+    if (!data) {
+      return false;
+    }
+    for (size_t i = output->capacity; i < input->size; ++i) {
+      if (!interfaces__msg__Isa__init(&data[i])) {
+        /* free currently allocated and return false */
+        for (; i-- > output->capacity; ) {
+          interfaces__msg__Isa__fini(&data[i]);
+        }
+        free(data);
+        return false;
+      }
+    }
+    output->data = data;
+    output->capacity = input->size;
+  }
+  output->size = input->size;
+  for (size_t i = 0; i < input->size; ++i) {
+    if (!interfaces__msg__Isa__copy(
+        &(input->data[i]), &(output->data[i])))
+    {
+      return false;
+    }
+  }
+  return true;
 }

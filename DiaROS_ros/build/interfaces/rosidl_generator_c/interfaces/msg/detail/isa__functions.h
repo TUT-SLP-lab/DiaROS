@@ -66,6 +66,32 @@ ROSIDL_GENERATOR_C_PUBLIC_interfaces
 void
 interfaces__msg__Isa__destroy(interfaces__msg__Isa * msg);
 
+/// Check for msg/Isa message equality.
+/**
+ * \param[in] lhs The message on the left hand size of the equality operator.
+ * \param[in] rhs The message on the right hand size of the equality operator.
+ * \return true if messages are equal, otherwise false.
+ */
+ROSIDL_GENERATOR_C_PUBLIC_interfaces
+bool
+interfaces__msg__Isa__are_equal(const interfaces__msg__Isa * lhs, const interfaces__msg__Isa * rhs);
+
+/// Copy a msg/Isa message.
+/**
+ * This functions performs a deep copy, as opposed to the shallow copy that
+ * plain assignment yields.
+ *
+ * \param[in] input The source message pointer.
+ * \param[out] output The target message pointer, which must
+ *   have been initialized before calling this function.
+ * \return true if successful, or false if either pointer is null
+ *   or memory allocation fails.
+ */
+ROSIDL_GENERATOR_C_PUBLIC_interfaces
+bool
+interfaces__msg__Isa__copy(
+  const interfaces__msg__Isa * input,
+  interfaces__msg__Isa * output);
 
 /// Initialize array of msg/Isa messages.
 /**
@@ -116,6 +142,33 @@ interfaces__msg__Isa__Sequence__create(size_t size);
 ROSIDL_GENERATOR_C_PUBLIC_interfaces
 void
 interfaces__msg__Isa__Sequence__destroy(interfaces__msg__Isa__Sequence * array);
+
+/// Check for msg/Isa message array equality.
+/**
+ * \param[in] lhs The message array on the left hand size of the equality operator.
+ * \param[in] rhs The message array on the right hand size of the equality operator.
+ * \return true if message arrays are equal in size and content, otherwise false.
+ */
+ROSIDL_GENERATOR_C_PUBLIC_interfaces
+bool
+interfaces__msg__Isa__Sequence__are_equal(const interfaces__msg__Isa__Sequence * lhs, const interfaces__msg__Isa__Sequence * rhs);
+
+/// Copy an array of msg/Isa messages.
+/**
+ * This functions performs a deep copy, as opposed to the shallow copy that
+ * plain assignment yields.
+ *
+ * \param[in] input The source array pointer.
+ * \param[out] output The target array pointer, which must
+ *   have been initialized before calling this function.
+ * \return true if successful, or false if either pointer
+ *   is null or memory allocation fails.
+ */
+ROSIDL_GENERATOR_C_PUBLIC_interfaces
+bool
+interfaces__msg__Isa__Sequence__copy(
+  const interfaces__msg__Isa__Sequence * input,
+  interfaces__msg__Isa__Sequence * output);
 
 #ifdef __cplusplus
 }

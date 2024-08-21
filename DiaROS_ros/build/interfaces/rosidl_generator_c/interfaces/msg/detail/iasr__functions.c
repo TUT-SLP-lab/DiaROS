@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "rcutils/allocator.h"
+
 
 // Include directives for member types
 // Member `you`
@@ -39,17 +41,56 @@ interfaces__msg__Iasr__fini(interfaces__msg__Iasr * msg)
   // is_final
 }
 
+bool
+interfaces__msg__Iasr__are_equal(const interfaces__msg__Iasr * lhs, const interfaces__msg__Iasr * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  // you
+  if (!rosidl_runtime_c__String__are_equal(
+      &(lhs->you), &(rhs->you)))
+  {
+    return false;
+  }
+  // is_final
+  if (lhs->is_final != rhs->is_final) {
+    return false;
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Iasr__copy(
+  const interfaces__msg__Iasr * input,
+  interfaces__msg__Iasr * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  // you
+  if (!rosidl_runtime_c__String__copy(
+      &(input->you), &(output->you)))
+  {
+    return false;
+  }
+  // is_final
+  output->is_final = input->is_final;
+  return true;
+}
+
 interfaces__msg__Iasr *
 interfaces__msg__Iasr__create()
 {
-  interfaces__msg__Iasr * msg = (interfaces__msg__Iasr *)malloc(sizeof(interfaces__msg__Iasr));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Iasr * msg = (interfaces__msg__Iasr *)allocator.allocate(sizeof(interfaces__msg__Iasr), allocator.state);
   if (!msg) {
     return NULL;
   }
   memset(msg, 0, sizeof(interfaces__msg__Iasr));
   bool success = interfaces__msg__Iasr__init(msg);
   if (!success) {
-    free(msg);
+    allocator.deallocate(msg, allocator.state);
     return NULL;
   }
   return msg;
@@ -58,10 +99,11 @@ interfaces__msg__Iasr__create()
 void
 interfaces__msg__Iasr__destroy(interfaces__msg__Iasr * msg)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (msg) {
     interfaces__msg__Iasr__fini(msg);
   }
-  free(msg);
+  allocator.deallocate(msg, allocator.state);
 }
 
 
@@ -71,9 +113,11 @@ interfaces__msg__Iasr__Sequence__init(interfaces__msg__Iasr__Sequence * array, s
   if (!array) {
     return false;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   interfaces__msg__Iasr * data = NULL;
+
   if (size) {
-    data = (interfaces__msg__Iasr *)calloc(size, sizeof(interfaces__msg__Iasr));
+    data = (interfaces__msg__Iasr *)allocator.zero_allocate(size, sizeof(interfaces__msg__Iasr), allocator.state);
     if (!data) {
       return false;
     }
@@ -90,7 +134,7 @@ interfaces__msg__Iasr__Sequence__init(interfaces__msg__Iasr__Sequence * array, s
       for (; i > 0; --i) {
         interfaces__msg__Iasr__fini(&data[i - 1]);
       }
-      free(data);
+      allocator.deallocate(data, allocator.state);
       return false;
     }
   }
@@ -106,6 +150,8 @@ interfaces__msg__Iasr__Sequence__fini(interfaces__msg__Iasr__Sequence * array)
   if (!array) {
     return;
   }
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+
   if (array->data) {
     // ensure that data and capacity values are consistent
     assert(array->capacity > 0);
@@ -113,7 +159,7 @@ interfaces__msg__Iasr__Sequence__fini(interfaces__msg__Iasr__Sequence * array)
     for (size_t i = 0; i < array->capacity; ++i) {
       interfaces__msg__Iasr__fini(&array->data[i]);
     }
-    free(array->data);
+    allocator.deallocate(array->data, allocator.state);
     array->data = NULL;
     array->size = 0;
     array->capacity = 0;
@@ -127,13 +173,14 @@ interfaces__msg__Iasr__Sequence__fini(interfaces__msg__Iasr__Sequence * array)
 interfaces__msg__Iasr__Sequence *
 interfaces__msg__Iasr__Sequence__create(size_t size)
 {
-  interfaces__msg__Iasr__Sequence * array = (interfaces__msg__Iasr__Sequence *)malloc(sizeof(interfaces__msg__Iasr__Sequence));
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
+  interfaces__msg__Iasr__Sequence * array = (interfaces__msg__Iasr__Sequence *)allocator.allocate(sizeof(interfaces__msg__Iasr__Sequence), allocator.state);
   if (!array) {
     return NULL;
   }
   bool success = interfaces__msg__Iasr__Sequence__init(array, size);
   if (!success) {
-    free(array);
+    allocator.deallocate(array, allocator.state);
     return NULL;
   }
   return array;
@@ -142,8 +189,66 @@ interfaces__msg__Iasr__Sequence__create(size_t size)
 void
 interfaces__msg__Iasr__Sequence__destroy(interfaces__msg__Iasr__Sequence * array)
 {
+  rcutils_allocator_t allocator = rcutils_get_default_allocator();
   if (array) {
     interfaces__msg__Iasr__Sequence__fini(array);
   }
-  free(array);
+  allocator.deallocate(array, allocator.state);
+}
+
+bool
+interfaces__msg__Iasr__Sequence__are_equal(const interfaces__msg__Iasr__Sequence * lhs, const interfaces__msg__Iasr__Sequence * rhs)
+{
+  if (!lhs || !rhs) {
+    return false;
+  }
+  if (lhs->size != rhs->size) {
+    return false;
+  }
+  for (size_t i = 0; i < lhs->size; ++i) {
+    if (!interfaces__msg__Iasr__are_equal(&(lhs->data[i]), &(rhs->data[i]))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool
+interfaces__msg__Iasr__Sequence__copy(
+  const interfaces__msg__Iasr__Sequence * input,
+  interfaces__msg__Iasr__Sequence * output)
+{
+  if (!input || !output) {
+    return false;
+  }
+  if (output->capacity < input->size) {
+    const size_t allocation_size =
+      input->size * sizeof(interfaces__msg__Iasr);
+    interfaces__msg__Iasr * data =
+      (interfaces__msg__Iasr *)realloc(output->data, allocation_size);
+    if (!data) {
+      return false;
+    }
+    for (size_t i = output->capacity; i < input->size; ++i) {
+      if (!interfaces__msg__Iasr__init(&data[i])) {
+        /* free currently allocated and return false */
+        for (; i-- > output->capacity; ) {
+          interfaces__msg__Iasr__fini(&data[i]);
+        }
+        free(data);
+        return false;
+      }
+    }
+    output->data = data;
+    output->capacity = input->size;
+  }
+  output->size = input->size;
+  for (size_t i = 0; i < input->size; ++i) {
+    if (!interfaces__msg__Iasr__copy(
+        &(input->data[i]), &(output->data[i])))
+    {
+      return false;
+    }
+  }
+  return true;
 }

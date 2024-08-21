@@ -23,12 +23,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _Imm_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _Imm_type_support_ids_t;
 
 static const _Imm_type_support_ids_t _Imm_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -36,7 +35,7 @@ static const _Imm_type_support_ids_t _Imm_message_typesupport_ids = {
 
 typedef struct _Imm_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _Imm_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -44,7 +43,6 @@ typedef struct _Imm_type_support_symbol_names_t
 
 static const _Imm_type_support_symbol_names_t _Imm_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, interfaces, msg, Imm)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, interfaces, msg, Imm)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, interfaces, msg, Imm)),
   }
@@ -52,19 +50,18 @@ static const _Imm_type_support_symbol_names_t _Imm_message_typesupport_symbol_na
 
 typedef struct _Imm_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _Imm_type_support_data_t;
 
 static _Imm_type_support_data_t _Imm_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _Imm_message_typesupport_map = {
-  3,
+  2,
   "interfaces",
   &_Imm_message_typesupport_ids.typesupport_identifier[0],
   &_Imm_message_typesupport_symbol_names.symbol_name[0],
